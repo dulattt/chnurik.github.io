@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Hearts Background</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9e0e6;
+            overflow: hidden;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            text-align: center;
+            font-size: 2rem;
+            color: #e63946;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #e63946;
+            margin: 0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            background-color: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-size: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        #YesButton {
+            margin-right: 20px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: float 12s linear infinite, fadeIn 2s forwards;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Will you be my Valentine?</h1>
+        <button id="YesButton" onclick="location.href='thankyou.html'">Yes</button>
+        <button id="NoButton">No</button>
+    </div>
+
+    <script>
+        const numHearts = 2;  
+        const heartImage = 'heart.png'; 
+        const spawnInterval = 100; 
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}%`; 
+            heart.style.top = `${Math.random() * 100}%`; 
+            heart.style.animationDuration = `${Math.random() * 10 + 12}s`;  
+            heart.style.animationDelay = `${Math.random() * 5}s`;  
+            heart.style.backgroundImage = `url("${heartImage}")`;
+
+            document.body.appendChild(heart);
+
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        setInterval(() => {
+            for (let i = 0; i < numHearts; i++) {
+                createHeart();
+            }
+        }, spawnInterval);
+
+        var a = 0; 
+        document.getElementById("NoButton")
+        .addEventListener("click", function () {
+          var yesButton = document.querySelector(
+            'button[onclick*="thankyou.html"]'
+          );
+          var currentFontSize = parseInt(
+            window.getComputedStyle(yesButton).fontSize
+          );
+          yesButton.style.fontSize = currentFontSize + 10 + "px";
+          a++; 
+          if (a == 30) {
+            alert("Знаешь чей это ответ?");
+          } 
+        });
+
+    </script>
+
+</body>
+</html>
